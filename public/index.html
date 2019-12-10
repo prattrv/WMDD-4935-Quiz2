@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quiz 2</title>
+</head>
+<body>
+
+    <h1>Characters</h1>
+    
+    <ul id='character-container'></ul>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+
+        // container of character links
+        let container = document.getElementById('character-container')
+
+        // asynchronously get all characters
+        axios.get('/api/characters')
+        .then(result=>{
+
+            // For each character, create a new list node
+            result.data.forEach(character=>{
+                 let characterNode = document.createElement('li');
+
+                 // Each link will make GET request to /api/characters/:id
+                characterNode.innerHTML = `<a href='/api/characters/${character.id}'>${character.name}</a>`;
+
+                container.appendChild(characterNode);
+            })
+
+        })
+        .catch(error=>console.log(error));
+
+    </script>
+
+</body>
+</html>
